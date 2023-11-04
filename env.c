@@ -89,8 +89,8 @@ int unset_env(const char *env_variable)
 	int i, counter;
 	int exclude_index = '\0';
 	int env_len = str_array_len(environ);
-	
-	for (i = 0; i < env_len; )
+
+	for (i = 0; i < env_len;)
 	{
 		env_data = environ[i];
 		env_data = str_strip(env_data);
@@ -115,15 +115,15 @@ int unset_env(const char *env_variable)
 
 	if (exclude_index != '\0')
 	{
-		char ** new_env = (char **)malloc(sizeof(char *) * env_len + sizeof(NULL));
+		char **new_env = (char **)malloc(sizeof(char *) * env_len + sizeof(NULL));
 
 		if (new_env == NULL)
 		{
 			return (-1);
 		}
-		
+
 		/* iterating now */
-		for (i = 0; i < env_len; )
+		for (i = 0; i < env_len;)
 		{
 			if (i == exclude_index)
 			{
@@ -162,7 +162,7 @@ char *get_env(const char *env_variable)
 		_env = str_split(env_data, "=", 2);
 		env_var = _env[0];
 		env_val = _env[1];
-		
+
 		if (env_var)
 		{
 			if (str_cmp(env_var, (char *)env_variable))

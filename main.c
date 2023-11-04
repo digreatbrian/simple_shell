@@ -7,6 +7,12 @@
 #include <sys/wait.h>
 #include "main.h"
 
+/**
+ * main - Entry point
+ * @argc: Argument count
+ * @argv: Arguments List
+ * Return: 0
+ */
 int main(int argc, char **argv)
 {
 	char *command;
@@ -52,7 +58,7 @@ int main(int argc, char **argv)
 			if (was_eof)
 			{
 				was_eof = false;
-				cmd_status = exec_command("^[[D"); 
+				cmd_status = exec_command("^[[D");
 
 				if (cmd_status == -1)
 				{
@@ -132,7 +138,7 @@ int main(int argc, char **argv)
 			{
 				getpid();
 				cmd_status = exec_command(real_command);
-				
+
 				if (cmd_status == -1)
 				{
 					/* cmd was unsuccessful*/
@@ -145,7 +151,7 @@ int main(int argc, char **argv)
 		else
 		{
 			splitted_cmd = str_split(real_command, " ", 2);
-			
+
 			if (str_cmp(splitted_cmd[0], "exit"))
 			{
 				if (splitted_cmd[1])
@@ -168,6 +174,7 @@ int main(int argc, char **argv)
 			else if (str_cmp(splitted_cmd[0], "setenv"))
 			{
 				int k;
+
 				env_var = splitted_cmd[1];
 				env_val = splitted_cmd[2];
 

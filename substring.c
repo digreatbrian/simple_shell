@@ -8,7 +8,7 @@
  * @end_index: index to stop at
  * Return: array of splitted strings | NULL
  */
-char * str_sub(const char *string_array, int start_index, int end_index)
+char *str_sub(const char *string_array, int start_index, int end_index)
 {
 	int ln, i;
 	int _str_len = str_len((char *)string_array);
@@ -48,4 +48,3 @@ char * str_sub(const char *string_array, int start_index, int end_index)
 
 	return (st);
 }
-

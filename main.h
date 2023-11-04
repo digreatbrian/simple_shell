@@ -13,7 +13,7 @@ void str_array_print(char **arr, char *sep);
 int str_cmp(char *a, char *b);
 int str_len(char *string);
 int str_array_len(char **array);
-char * str_sub(const char *string_array, int start_index, int end_index);
+char *str_sub(const char *string_array, int start_index, int end_index);
 char **str_split(char *string, char *sep, int max_splits);
 char *get_absolute_executable_path(char *executable);
 int exec_command(char *cmd);

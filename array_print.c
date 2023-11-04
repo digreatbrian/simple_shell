@@ -3,6 +3,7 @@
 /**
  * str_array_print - print strings in an array
  * @arr: array with strings
+ * @sep: Separator to use when printing
  */
 void str_array_print(char **arr, char *sep)
 {

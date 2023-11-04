@@ -37,7 +37,7 @@ char **str_split(char *string, char *sep, int max_splits)
 	{
 		/* no single sep was discovered */
 		splitted = (char **)malloc((sizeof(char *) + sizeof(NULL)));
-		
+
 		if (splitted == NULL)
 		{
 			return (NULL);
@@ -46,16 +46,16 @@ char **str_split(char *string, char *sep, int max_splits)
 		splitted[1] = NULL;
 		return (splitted);
 	}
-	
+
 	string_len = str_len(string);
 	index_count = count_sep_indexes(sep_indexes);
-	splitted = (char **)malloc((sizeof(sep_index) * (index_count + 1)) + sizeof(char));
+	splitted = malloc((sizeof(sep_index) * (index_count + 1)) + sizeof(char));
 
 	for (i = 0; i <= index_count;)
 	{
 		sep_index target_index;
 		int start, end;
-		
+
 		target_index = sep_indexes[i];
 
 		if (target_index.start == -1 && target_index.end == -1)
@@ -106,7 +106,7 @@ char **str_split(char *string, char *sep, int max_splits)
 				temp_str = str_sub(string, start, end);
 			}
 		}
-		else 
+		else
 		{
 			temp_str = str_sub(string, start, end);
 		}
@@ -159,7 +159,7 @@ sep_index *get_sep_indexes(char *string, char *sep, int max_indexes)
 		{
 			/* checking if sep is found */
 			sep_found = true;
-			
+
 			for (; i < sep_len ; i++)
 			{
 				if (sep[i] != string[counter + i])
@@ -167,12 +167,12 @@ sep_index *get_sep_indexes(char *string, char *sep, int max_indexes)
 					sep_found = false;
 				}
 			}
-			
+
 			/* If sep is found */
 			if (sep_found)
 			{
 				sep_index new_index;
-				
+
 				new_index.start = counter;
 				new_index.end = counter + sep_len - 1;
 				indexes[index_counter] = new_index;
@@ -189,7 +189,7 @@ sep_index *get_sep_indexes(char *string, char *sep, int max_indexes)
 		/* no sep was found in string */
 		return (NULL);
 	}
-	
+
 	closing_index.start = -1;
 	closing_index.end = -1;
 	indexes[index_counter] = closing_index;

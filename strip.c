@@ -3,7 +3,8 @@
 #include "main.h"
 
 /**
- * str_strip_start - strips whitespaces from start of a string including tabs/newlines
+ * str_strip_start - strips whitespaces from start
+ * from start of a string including tabs/newlines
  * @string: String to strip
  * Return: stripped string
  */
@@ -57,7 +58,8 @@ char *str_strip_start(char *string)
 }
 
 /**
- * str_strip_end - strips whitespaces from from end of a string including tabs, newlines
+ * str_strip_end - strips whitespaces from from end
+ * from end of a string including tabs, newlines
  * @string: string to strip
  * Return: stripped string
  */
@@ -68,7 +70,7 @@ char *str_strip_end(char *string)
 	int end_index;
 	int i;
 	char c;
-	
+
 	for (i = ln - 1; i >= 0; i--)
 	{
 		c = string[i];
@@ -103,9 +105,9 @@ char *str_strip_end(char *string)
 		new_string = string;
 		return (new_string);
 	}
-	
+
 	new_string = str_sub(string, 0, end_index);
-	
+
 	return (new_string);
 }
 
@@ -118,6 +120,6 @@ char *str_strip(char *string)
 {
 	char *first_strip = str_strip_start(string);
 	char *second_strip = str_strip_end(first_strip);
-	
+
 	return (second_strip);
 }

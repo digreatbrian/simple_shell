@@ -86,7 +86,8 @@ int is_dir(char *path)
 }
 
 /**
- * get_absolute_executable_path - gets absolute path for an executable file ,eg ls
+ * get_absolute_executable_path - gets absolute path for an executable
+ * @executable: Executable name (eg "ls" )
  * Description: get abs path for an executable, uses PATH
  * Return: absolute path to an executable or null
  */
@@ -107,7 +108,7 @@ char *get_absolute_executable_path(char *executable)
 	int i, j;
 
 	PATH_ENV = get_env("PATH");
-	
+
 	if (!PATH_ENV)
 	{
 		return (NULL);
