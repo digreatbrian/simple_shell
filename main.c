@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	char **splitted_cmd;
 	int x;
 	int is_eof = false;
-	int was_eof = false;
+	char *eof_char = "^[[D";
 	char *env_var;
 	char *env_val;
 	char *cd_path;
@@ -45,37 +45,16 @@ int main(int argc, char **argv)
 		if (!shell_started)
 		{
 			_print("\n");
+			shell_started = true;
 		}
 
 		fflush(stdin);
 		fflush(stderr);
 		fflush(stdout);
 
-		if (!is_eof || !shell_started)
+		if (!is_eof)
 		{
-			shell_started = true;
-
-			if (was_eof)
-			{
-				was_eof = false;
-				cmd_status = exec_command("^[[D");
-
-				if (cmd_status == -1)
-				{
-					/* cmd was unsuccessful*/
-					perror(shell_name);
-				}
-				continue;
-			}
-			else
-			{
-				_print("$ ");
-			}
-		}
-		else
-		{
-			_print("^[[D");
-			was_eof = true;
+			_print("$ ");
 		}
 
 		cmd_chars_read = getline(&cmd_buffer, &max_cmd_length, stdin);
@@ -84,7 +63,19 @@ int main(int argc, char **argv)
 		{
 			/* handling EOF */
 			is_eof = true;
+			_print(eof_char);
 			continue;
+		}
+		else
+		{
+			if (is_eof)
+			{
+				/* EOF was previously inputted */
+				if (exec_command(eof_char) == -1)
+				{
+					perror(shell_name);
+				}
+			}
 		}
 
 		is_eof = false;
@@ -226,8 +217,27 @@ int main(int argc, char **argv)
 					/* cd to $HOME coz no path provided */
 					cd_path = get_env("HOME");
 				}
-				chdir(cd_path);
-				set_env("PWD", cd_path);
+
+				if (str_cmp(cd_path, "-"))
+				{
+					cd_path = get_env("OLDPWD");
+					if (cd_path)
+					{
+						chdir(cd_path);
+						set_env("PWD", cd_path);
+						_print(cd_path);
+						_print("\n");
+					}
+					else
+					{
+						_print("");
+					}
+				}
+				else
+				{
+					chdir(cd_path);
+					set_env("PWD", cd_path);
+				}
 				free(command_tmp);
 				free(real_command);
 				free(splitted_cmd);

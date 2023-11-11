@@ -135,7 +135,7 @@ int unset_env(const char *env_variable)
 			counter++;
 			i++;
 		}
-		new_env[counter + 1] = '\0';
+		new_env[counter + 1] = NULL;
 		environ = new_env;
 	}
 	/* NO ACTION TO PERFORM ,no ENV VAR to unset */
