@@ -280,7 +280,6 @@ int main(int argc, char **argv)
 
 		if (!shell_started)
 		{
-			_print("\n");
 			shell_started = true;
 		}
 		_print("$ ");
