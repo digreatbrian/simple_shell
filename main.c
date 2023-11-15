@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 #include "main.h"
 
-void run_command(char *real_command, char *shell_name)
+void run_command(char * real_command, char * shell_name)
 {
 	char *command;
 	char **command_tmp;
@@ -18,19 +18,19 @@ void run_command(char *real_command, char *shell_name)
 	char *cd_path;
 	int cmd_status;
 	int x;
-
+	
 	command_tmp = str_split(real_command, " ", 1);
 	command = command_tmp[0]; /* cmd stripped of args eg ls but ls -l entered*/
 
 	/* checking if command exists */
 	abs_command = get_absolute_executable_path(command);
-
+	
 	if (abs_command)
 	{
 		/**
-		 *  command exists somewhere ,lets create a child process
-		 *
-		 */
+			*  command exists somewhere ,lets create a child process
+		  *
+		  */
 		pid_t child_pid;
 		int pid_status;
 
@@ -67,7 +67,6 @@ void run_command(char *real_command, char *shell_name)
 			}
 		}
 		free(command_tmp);
-		free(abs_command);
 	}
 	else
 	{
@@ -108,7 +107,7 @@ void run_command(char *real_command, char *shell_name)
 				k = set_env(env_var, env_val);
 				free(command_tmp);
 				free(splitted_cmd);
-
+	
 				if (k == -1)
 				{
 					perror(shell_name);
@@ -177,15 +176,15 @@ void run_command(char *real_command, char *shell_name)
 		{
 			/* Run it as any other command */
 			cmd_status = exec_command(real_command);
-
+	
 			free(command_tmp);
 			free(splitted_cmd);
-
+	
 			if (cmd_status == -1)
 			{
 				/* cmd was unsuccessful*/
 				perror(shell_name);
-			}
+			}	
 		}
 	}
 }
@@ -202,7 +201,7 @@ int main(int argc, char **argv)
 	char *cmd_buffer;
 	char *command;
 	char *arg1;
-	char **splitted_file_content;
+	char ** splitted_file_content;
 	char *file_content_buffer;
 	char *shell_name = argv[0]; /* name of our shell program */
 	int x, y, fd;
@@ -212,49 +211,49 @@ int main(int argc, char **argv)
 	int max_file_read_buffer = 100;
 	int max_file_cmds = 20;
 	size_t max_cmd_length = 64; /* max len of a command including args */
-
+	
 	cmd_buffer = (char *)malloc(sizeof(char) * max_cmd_length);
 
 	if (cmd_buffer == NULL)
 	{
 		perror(shell_name);
 	}
-
+	
 	/* checking if filename wasnt parsed as an arg */
 	if (argc == 2)
 	{
 		arg1 = argv[1];
-
+		
 		if (is_file(arg1))
 		{
 			/* this is a file , its accessible */
 			fd = open(arg1, O_RDONLY);
-
+			
 			if (fd == -1)
 			{
 				free(cmd_buffer);
 				perror(shell_name);
 				exit(-1);
 			}
-
+			
 			/* reading file content */
 			file_content_buffer = malloc(sizeof(char) * max_file_read_buffer + 1);
-
+			
 			if (file_content_buffer == NULL)
 			{
 				free(cmd_buffer);
 				perror(shell_name);
 				exit(-1);
 			}
-
+			
 			file_read_buffer = read(fd, file_content_buffer, max_file_read_buffer);
-
+			
 			file_content_buffer[file_read_buffer] = '\0';
-
+			
 			/* now executing content */
 			splitted_file_content = str_split(file_content_buffer, "\n", max_file_cmds);
-
-			for (x = 0; x < max_file_cmds;)
+			
+			for (x = 0 ; x < max_file_cmds ;)
 			{
 				command = splitted_file_content[x];
 				if (!command)
@@ -277,14 +276,13 @@ int main(int argc, char **argv)
 		fflush(stdin);
 		fflush(stdout);
 		fflush(stderr);
-
+		
 		if (!shell_started)
 		{
-			_print("\n");
 			shell_started = true;
 		}
 		_print("$ ");
-
+		
 		cmd_chars_read = getline(&cmd_buffer, &max_cmd_length, stdin);
 
 		if (cmd_chars_read == -1)
@@ -300,13 +298,13 @@ int main(int argc, char **argv)
 			free(command);
 			continue;
 		}
-
+		
 		/* trying to handle ';' using 10 as maxcount*/
 		splitted_cmd = str_split(command, ";", 10);
-
+		
 		if (splitted_cmd[1])
 		{
-			for (y = 0; y < 10;)
+			for (y = 0 ; y < 10 ;)
 			{
 				command = splitted_cmd[y];
 				if (!command)
