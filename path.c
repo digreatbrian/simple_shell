@@ -6,11 +6,14 @@
 #include <stdbool.h>
 #include "main.h"
 
+void brian(void);
+
 /**
  * is_file - checks whether a file exists or not
  * @filepath: Path to file
  * Return: 0 (if false)  1 (if true)  Other int (unexpected error)
  */
+
 int is_file(const char *filepath)
 {
 	int fd = open(filepath, O_RDONLY);
@@ -49,6 +52,7 @@ int is_file(const char *filepath)
  * @path: Path to directory
  * Return: 0 (if false)  1 (if true)  Other int (unexpected error)
  */
+
 int is_dir(char *path)
 {
 	DIR *dir = opendir(path);
@@ -91,6 +95,7 @@ int is_dir(char *path)
  * Description: get abs path for an executable, uses PATH
  * Return: absolute path to an executable or null
  */
+
 char *get_absolute_executable_path(char *executable)
 {
 	char *PATH_ENV;
@@ -101,7 +106,7 @@ char *get_absolute_executable_path(char *executable)
 	char *new_executable_path;
 	char *_executable_temp;
 	char *executable_exts[] = {"exe", NULL}; /* executable extensions */
-	char *ext;								 /* executable extension */
+	char *ext;				/* executable extension */
 	int executable_exts_len = str_array_len(executable_exts);
 	int path_env_max_splits = 100;
 	int path_env_len;
@@ -127,7 +132,7 @@ char *get_absolute_executable_path(char *executable)
 		_path = path_env_array[i];
 		_path = str_add(_path, path_slash_sep);
 
-		/* try to find if the executable exists without adding an extension */
+	/* try to find if the executable exists without adding an extension */
 		new_executable_path = str_add(_path, executable);
 
 		if (is_file(new_executable_path))
@@ -138,8 +143,9 @@ char *get_absolute_executable_path(char *executable)
 		else
 		{
 			/**
-			 * try to find if the executable exists using executable with extension
-			 * which means adding an extension to executable filename
+			 * try to find if the executable exists using executable
+			 * with extension which means adding an extension to
+			 * executable filename
 			 */
 			free(new_executable_path);
 
@@ -165,3 +171,4 @@ char *get_absolute_executable_path(char *executable)
 	/* return null coz we found nothing */
 	return (NULL);
 }
+

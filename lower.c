@@ -6,6 +6,7 @@
  * @string: string to convert
  * Return: converted string
  */
+
 char *str_lower(const char *string)
 {
 	int _str_len = str_len((char *)string);
@@ -36,3 +37,4 @@ char *str_lower(const char *string)
 	newstr[i] = '\0';
 	return ((char *)newstr);
 }
+

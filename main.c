@@ -7,6 +7,8 @@
 #include <sys/wait.h>
 #include "main.h"
 
+void brian(void);
+
 void run_command(char *real_command, char *shell_name)
 {
 	char *command;
@@ -196,6 +198,7 @@ void run_command(char *real_command, char *shell_name)
  * @argv: Arguments List
  * Return: 0
  */
+
 int main(int argc, char **argv)
 {
 	char **splitted_cmd;
@@ -238,7 +241,8 @@ int main(int argc, char **argv)
 			}
 
 			/* reading file content */
-			file_content_buffer = malloc(sizeof(char) * max_file_read_buffer + 1);
+			file_content_buffer = malloc(sizeof(char) *
+					max_file_read_buffer + 1);
 
 			if (file_content_buffer == NULL)
 			{
@@ -247,12 +251,14 @@ int main(int argc, char **argv)
 				exit(-1);
 			}
 
-			file_read_buffer = read(fd, file_content_buffer, max_file_read_buffer);
+			file_read_buffer = read(fd, file_content_buffer,
+					max_file_read_buffer);
 
 			file_content_buffer[file_read_buffer] = '\0';
 
 			/* now executing content */
-			splitted_file_content = str_split(file_content_buffer, "\n", max_file_cmds);
+			splitted_file_content = str_split(file_content_buffer,
+					"\n", max_file_cmds);
 
 			for (x = 0; x < max_file_cmds;)
 			{
@@ -263,7 +269,8 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					run_command(str_strip(command), shell_name);
+					run_command(str_strip(command),
+							shell_name);
 				}
 				x++;
 			}
@@ -314,7 +321,8 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					run_command(str_strip(command), shell_name);
+					run_command(str_strip(command),
+							shell_name);
 				}
 				y++;
 			}
@@ -328,3 +336,4 @@ int main(int argc, char **argv)
 	(void)argc;
 	return (0);
 }
+

@@ -8,6 +8,7 @@
  * @string: String to strip
  * Return: stripped string
  */
+
 char *str_strip_start(char *string)
 {
 	char *new_string;
@@ -34,7 +35,8 @@ char *str_strip_start(char *string)
 		if (c != ' ' && c != '\n' && c != '\t' && is_start_of_string)
 		{
 			/**
-			 * lets strip the spaces because this is the start of the string
+			 * lets strip the spaces because this is the start of
+			 * the string
 			 */
 			new_string[counter] = c;
 			counter++;
@@ -44,9 +46,10 @@ char *str_strip_start(char *string)
 		else if (!is_start_of_string)
 		{
 			/**
-			 * record as it is , this is not the start of the string ,the spaces
-			 * might be needed for string to make sense, it can be spaces in
-			 * between a string ,we dont need to remove that
+			 * record as it is , this is not the start of the string
+			 * ,the spaces might be needed for string to make sense,
+			 * it can be space in between a string ,we dont need to
+			 * remove that
 			 */
 			new_string[counter] = c;
 			counter++;
@@ -63,6 +66,7 @@ char *str_strip_start(char *string)
  * @string: string to strip
  * Return: stripped string
  */
+
 char *str_strip_end(char *string)
 {
 	char *new_string;
@@ -116,6 +120,7 @@ char *str_strip_end(char *string)
  * @string: string to strip
  * Return: stripped string
  */
+
 char *str_strip(char *string)
 {
 	char *first_strip = str_strip_start(string);
@@ -123,3 +128,4 @@ char *str_strip(char *string)
 
 	return (second_strip);
 }
+

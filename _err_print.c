@@ -5,6 +5,7 @@
  * @string: string to print
  * Return: Always 0 (Success)
  */
+
 void _err_print(char *string)
 {
 	int counter = 0;
