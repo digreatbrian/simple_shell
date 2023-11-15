@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "main.h"
 
-extern char **environ;
-
 /**
  * exec_command - executes a command
  * @cmd: command with(out) arguments

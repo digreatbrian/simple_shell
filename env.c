@@ -5,8 +5,6 @@
 
 void tafara(void);
 
-extern char **environ;
-
 /**
  * set_env - set environment variable value
  * @env_variable: Environment variable

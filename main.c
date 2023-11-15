@@ -9,6 +9,12 @@
 
 void brian(void);
 
+/**
+ * run_command - Function to run commands
+ * @real_command: Real command
+ * @shell_name: Name of shell
+ */
+
 void run_command(char *real_command, char *shell_name)
 {
 	char *command;
@@ -103,7 +109,8 @@ void run_command(char *real_command, char *shell_name)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name, ": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
+				_err_print(str_add(shell_name,
+			": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
 			}
 			else
 			{
@@ -126,13 +133,15 @@ void run_command(char *real_command, char *shell_name)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name, ": Command syntax: unsetenv ENV_VARIABLE\n"));
+				_err_print(str_add(shell_name,
+				": Command syntax: unsetenv ENV_VARIABLE\n"));
 			}
 			else if (get_env(env_var) == NULL)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name, ": Error: Trying to set an unexisting ENV_VARIABLE\n"));
+				_err_print(str_add(shell_name,
+			": Error: Trying to set an unexisting ENV_VARIABLE\n"));
 			}
 			else
 			{

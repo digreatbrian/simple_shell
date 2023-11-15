@@ -2,20 +2,6 @@
 #include <stdbool.h>
 #include "main.h"
 
-/**
- * struct str_index - struct for index range of a string
- * @start: starting index for target string
- * @end: ending index for target string
- */
-
-struct str_index
-{
-	int start;
-	int end;
-};
-typedef struct str_index str_index;
-typedef struct str_index sep_index;
-
 sep_index *get_sep_indexes(char *string, char *sep, int max_indexes);
 int count_sep_indexes(sep_index *sep_indexes);
 

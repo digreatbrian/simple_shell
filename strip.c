@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include "main.h"
 
+void tafara(void);
+
 /**
  * str_strip_start - strips whitespaces from start
  * from start of a string including tabs/newlines
