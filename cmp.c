@@ -7,6 +7,7 @@
  * @b: second string
  * Return: 0 or 1
  */
+
 int str_cmp(char *a, char *b)
 {
 	int is_equal = true;
@@ -27,3 +28,4 @@ int str_cmp(char *a, char *b)
 
 	return (is_equal);
 }
+

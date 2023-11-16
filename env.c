@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "main.h"
 
-extern char **environ;
+void tafara(void);
 
 /**
  * set_env - set environment variable value
@@ -11,6 +11,7 @@ extern char **environ;
  * @env_value: Environment variable value
  * Return: 0 on success and -1 on error
  */
+
 int set_env(const char *env_variable, const char *env_value)
 {
 	char **_env;
@@ -81,6 +82,7 @@ int set_env(const char *env_variable, const char *env_value)
  * @env_variable: Environment variable
  * Return: 0 on success and -1 on error
  */
+
 int unset_env(const char *env_variable)
 {
 	char **_env;
@@ -147,6 +149,7 @@ int unset_env(const char *env_variable)
  * @env_variable: Environment variable
  * Return: Environment variable value or null on error
  */
+
 char *get_env(const char *env_variable)
 {
 	char **_env;
@@ -174,3 +177,4 @@ char *get_env(const char *env_variable)
 	}
 	return (NULL);
 }
+

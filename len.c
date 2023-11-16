@@ -1,8 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "main.h"
+
 /**
  * str_len - get length of a string
  * @string: array of chars | string
  * Return: length of the string
  */
+
 int str_len(char *string)
 {
 	int counter = 0;
@@ -23,6 +28,7 @@ int str_len(char *string)
  * @array: array containing strings
  * Return: number of items in the array
  */
+
 int str_array_len(char *array[])
 {
 	int counter = 0;
@@ -37,3 +43,4 @@ int str_array_len(char *array[])
 	}
 	return (counter);
 }
+

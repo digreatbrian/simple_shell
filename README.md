@@ -1,2 +1,4 @@
-# Simple Shell  
-### by Brian Musakwa and Tafara Nyamhunga
+# Simple Shell
+
+### Authors:
+### Brian Musakwa and Tafara Nyamhunga

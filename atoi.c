@@ -5,6 +5,7 @@
  * @ch: int in form of char
  * Return: int
  */
+
 int char_to_int(char ch)
 {
 	char c;
@@ -29,6 +30,7 @@ int char_to_int(char ch)
  * @string: int in form of a string
  * Return: int
  */
+
 int str_to_int(char *string)
 {
 	int new_int = 0;
@@ -53,3 +55,4 @@ int str_to_int(char *string)
 
 	return (new_int);
 }
+

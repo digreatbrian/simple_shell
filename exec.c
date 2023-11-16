@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include "main.h"
 
-extern char **environ;
-
 /**
  * exec_command - executes a command
  * @cmd: command with(out) arguments
  * this doesn't handle piping / pipes and && ,other similar opertions
  * Return: return value for the command
  */
+
 int exec_command(char *cmd)
 {
 	int max_command_args = 10;
@@ -28,3 +27,4 @@ int exec_command(char *cmd)
 	}
 	return (execve(cmd_array[0], cmd_array, envp));
 }
+

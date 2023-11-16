@@ -7,7 +7,19 @@
 #include <sys/wait.h>
 #include "main.h"
 
+<<<<<<< HEAD
 void run_command(char * real_command, char * shell_name)
+=======
+void brian(void);
+
+/**
+ * run_command - Function to run commands
+ * @real_command: Real command
+ * @shell_name: Name of shell
+ */
+
+void run_command(char *real_command, char *shell_name)
+>>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
 {
 	char *command;
 	char **command_tmp;
@@ -100,7 +112,8 @@ void run_command(char * real_command, char * shell_name)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name, ": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
+				_err_print(str_add(shell_name,
+			": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
 			}
 			else
 			{
@@ -123,13 +136,15 @@ void run_command(char * real_command, char * shell_name)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name, ": Command syntax: unsetenv ENV_VARIABLE\n"));
+				_err_print(str_add(shell_name,
+				": Command syntax: unsetenv ENV_VARIABLE\n"));
 			}
 			else if (get_env(env_var) == NULL)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name, ": Error: Trying to set an unexisting ENV_VARIABLE\n"));
+				_err_print(str_add(shell_name,
+			": Error: Trying to set an unexisting ENV_VARIABLE\n"));
 			}
 			else
 			{
@@ -195,6 +210,7 @@ void run_command(char * real_command, char * shell_name)
  * @argv: Arguments List
  * Return: 0
  */
+
 int main(int argc, char **argv)
 {
 	char **splitted_cmd;
@@ -239,23 +255,43 @@ int main(int argc, char **argv)
 			}
 			
 			/* reading file content */
+<<<<<<< HEAD
 			file_content_buffer = malloc(sizeof(char) * max_file_read_buffer + 1);
 			
+=======
+			file_content_buffer = malloc(sizeof(char) *
+					max_file_read_buffer + 1);
+
+>>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
 			if (file_content_buffer == NULL)
 			{
 				free(cmd_buffer);
 				perror(shell_name);
 				exit(-1);
 			}
+<<<<<<< HEAD
 			
 			file_read_buffer = read(fd, file_content_buffer, max_file_read_buffer);
 			
+=======
+
+			file_read_buffer = read(fd, file_content_buffer,
+					max_file_read_buffer);
+
+>>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
 			file_content_buffer[file_read_buffer] = '\0';
 			
 			/* now executing content */
+<<<<<<< HEAD
 			splitted_file_content = str_split(file_content_buffer, "\n", max_file_cmds);
 			
 			for (x = 0 ; x < max_file_cmds ;)
+=======
+			splitted_file_content = str_split(file_content_buffer,
+					"\n", max_file_cmds);
+
+			for (x = 0; x < max_file_cmds;)
+>>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
 			{
 				command = splitted_file_content[x];
 				if (!command)
@@ -264,7 +300,8 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					run_command(str_strip(command), shell_name);
+					run_command(str_strip(command),
+							shell_name);
 				}
 				x++;
 			}
@@ -334,7 +371,8 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					run_command(str_strip(command), shell_name);
+					run_command(str_strip(command),
+							shell_name);
 				}
 				y++;
 			}
@@ -348,3 +386,4 @@ int main(int argc, char **argv)
 	(void)argc;
 	return (0);
 }
+
