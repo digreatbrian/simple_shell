@@ -203,6 +203,7 @@ int main(int argc, char **argv)
 	char *arg1;
 	char ** splitted_file_content;
 	char *file_content_buffer;
+	char *fd_buffer;
 	char *shell_name = argv[0]; /* name of our shell program */
 	int x, y, fd;
 	int cmd_chars_read;
@@ -213,8 +214,9 @@ int main(int argc, char **argv)
 	size_t max_cmd_length = 64; /* max len of a command including args */
 	
 	cmd_buffer = (char *)malloc(sizeof(char) * max_cmd_length);
+	fd_buffer = malloc(sizeof(char) * max_file_read_buffer + 1);
 
-	if (cmd_buffer == NULL)
+	if (cmd_buffer == NULL || fd_buffer == NULL)
 	{
 		perror(shell_name);
 	}
@@ -270,17 +272,35 @@ int main(int argc, char **argv)
 			exit(0);
 		}
 	}
-
+	
+	/* handling piping */
+	if (!isatty(STDIN_FILENO))
+	{
+		cmd_chars_read = getline(&cmd_buffer, &max_cmd_length, stdin);
+		
+		if (cmd_chars_read == -1)
+		{
+			/* handling EOF */
+			exit(-1);
+		}
+		cmd_buffer[cmd_chars_read] = '\0';
+		command = str_strip(cmd_buffer);
+		run_command(command, shell_name);
+		
+		return (0);
+	}
+	
 	while (true)
 	{
+		if (shell_started == false)
+		{
+			shell_started = true;
+		}
+		
 		fflush(stdin);
 		fflush(stdout);
 		fflush(stderr);
 		
-		if (!shell_started)
-		{
-			shell_started = true;
-		}
 		_print("$ ");
 		
 		cmd_chars_read = getline(&cmd_buffer, &max_cmd_length, stdin);
@@ -290,6 +310,7 @@ int main(int argc, char **argv)
 			/* handling EOF */
 			exit(-1);
 		}
+		cmd_buffer[cmd_chars_read] = '\0';
 		command = str_strip(cmd_buffer); /* cmd with args if any eg ls -l */
 
 		/* if nothing was entered */
