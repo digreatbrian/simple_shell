@@ -2,15 +2,12 @@
 #include <stdbool.h>
 #include "main.h"
 
-void tafara(void);
-
 /**
  * str_strip_start - strips whitespaces from start
  * from start of a string including tabs/newlines
  * @string: String to strip
  * Return: stripped string
  */
-
 char *str_strip_start(char *string)
 {
 	char *new_string;
@@ -37,8 +34,7 @@ char *str_strip_start(char *string)
 		if (c != ' ' && c != '\n' && c != '\t' && is_start_of_string)
 		{
 			/**
-			 * lets strip the spaces because this is the start of
-			 * the string
+			 * lets strip the spaces because this is the start of the string
 			 */
 			new_string[counter] = c;
 			counter++;
@@ -48,10 +44,9 @@ char *str_strip_start(char *string)
 		else if (!is_start_of_string)
 		{
 			/**
-			 * record as it is , this is not the start of the string
-			 * ,the spaces might be needed for string to make sense,
-			 * it can be space in between a string ,we dont need to
-			 * remove that
+			 * record as it is , this is not the start of the string ,the spaces
+			 * might be needed for string to make sense, it can be spaces in
+			 * between a string ,we dont need to remove that
 			 */
 			new_string[counter] = c;
 			counter++;
@@ -68,40 +63,39 @@ char *str_strip_start(char *string)
  * @string: string to strip
  * Return: stripped string
  */
-
 char *str_strip_end(char *string)
 {
 	char *new_string;
 	int ln = str_len(string);
-	int end_index;
+	int end_index = 0;
 	int i;
 	char c;
 
-	for (i = ln - 1; i >= 0; i--)
-	{
-		c = string[i];
-
-		if (c == ' ' || c == '\n' || c == '\t')
+	if (ln > 0)
+		for (i = ln - 1; i >= 0; i--)
 		{
-			end_index = i - 1;
-		}
+			c = string[i];
 
-		else
-		{
-			/**
-			 * the moment we come across a valid char then stop ,
-			 * thats where we will end up when building new string
-			 */
-			 end_index = i;
-			break;
+			if (c == ' ' || c == '\n' || c == '\t')
+			{
+				end_index = i - 1;
+			}
+
+			else
+			{
+				/**
+				 * the moment we come across a valid char then stop ,
+				 * thats where we will end up when building new string
+				 */
+				end_index = i;
+				break;
+			}
 		}
-	}
 
 	if (end_index < 0)
 	{
-		/* no string was inputted */
-		new_string = string;
-		return (new_string);
+		/* no string was inputted or blank string */
+		end_index = 0;
 	}
 
 	new_string = malloc(sizeof(char) * (end_index) + sizeof(char));
@@ -111,9 +105,7 @@ char *str_strip_end(char *string)
 		new_string = string;
 		return (new_string);
 	}
-
 	new_string = str_sub(string, 0, end_index);
-
 	return (new_string);
 }
 
@@ -122,7 +114,6 @@ char *str_strip_end(char *string)
  * @string: string to strip
  * Return: stripped string
  */
-
 char *str_strip(char *string)
 {
 	char *first_strip = str_strip_start(string);
@@ -130,4 +121,3 @@ char *str_strip(char *string)
 
 	return (second_strip);
 }
-

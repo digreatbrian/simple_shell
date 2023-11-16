@@ -7,7 +7,6 @@
  * @b: second bstring
  * Return: Concatenated string
  */
-
 char *str_add(char *a, char *b)
 {
 	int a_len = str_len(a);
@@ -41,4 +40,3 @@ char *str_add(char *a, char *b)
 	newstr[counter] = '\0';
 	return (newstr);
 }
-

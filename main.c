@@ -7,21 +7,10 @@
 #include <sys/wait.h>
 #include "main.h"
 
-<<<<<<< HEAD
 void run_command(char * real_command, char * shell_name)
-=======
-void brian(void);
-
-/**
- * run_command - Function to run commands
- * @real_command: Real command
- * @shell_name: Name of shell
- */
-
-void run_command(char *real_command, char *shell_name)
->>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
 {
 	char *command;
+	char *real_cmd;
 	char **command_tmp;
 	char **splitted_cmd;
 	char *abs_command;
@@ -31,8 +20,9 @@ void run_command(char *real_command, char *shell_name)
 	int cmd_status;
 	int x;
 	
-	command_tmp = str_split(real_command, " ", 1);
-	command = command_tmp[0]; /* cmd stripped of args eg ls but ls -l entered*/
+	real_cmd = str_strip(real_command);
+	command_tmp = str_split(real_cmd, " ", 1);
+	command = str_strip(command_tmp[0]); /* cmd stripped of args eg ls but ls -l entered*/
 
 	/* checking if command exists */
 	abs_command = get_absolute_executable_path(command);
@@ -52,7 +42,6 @@ void run_command(char *real_command, char *shell_name)
 		{
 			/* failed to fork a child process */
 			free(command_tmp);
-			free(real_command);
 		}
 
 		else if (child_pid != 0)
@@ -70,7 +59,7 @@ void run_command(char *real_command, char *shell_name)
 		else if (child_pid == 0)
 		{
 			getpid();
-			cmd_status = exec_command(real_command);
+			cmd_status = exec_command(real_cmd);
 
 			if (cmd_status == -1)
 			{
@@ -82,7 +71,7 @@ void run_command(char *real_command, char *shell_name)
 	}
 	else
 	{
-		splitted_cmd = str_split(real_command, " ", 2);
+		splitted_cmd = str_split(real_cmd, " ", 2);
 
 		if (str_cmp(splitted_cmd[0], "exit"))
 		{
@@ -112,8 +101,7 @@ void run_command(char *real_command, char *shell_name)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name,
-			": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
+				_err_print(str_add(shell_name, ": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
 			}
 			else
 			{
@@ -136,15 +124,13 @@ void run_command(char *real_command, char *shell_name)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name,
-				": Command syntax: unsetenv ENV_VARIABLE\n"));
+				_err_print(str_add(shell_name, ": Command syntax: unsetenv ENV_VARIABLE\n"));
 			}
 			else if (get_env(env_var) == NULL)
 			{
 				free(command_tmp);
 				free(splitted_cmd);
-				_err_print(str_add(shell_name,
-			": Error: Trying to set an unexisting ENV_VARIABLE\n"));
+				_err_print(str_add(shell_name, ": Error: Trying to set an unexisting ENV_VARIABLE\n"));
 			}
 			else
 			{
@@ -190,7 +176,7 @@ void run_command(char *real_command, char *shell_name)
 		else
 		{
 			/* Run it as any other command */
-			cmd_status = exec_command(real_command);
+			cmd_status = exec_command(real_cmd);
 	
 			free(command_tmp);
 			free(splitted_cmd);
@@ -210,10 +196,10 @@ void run_command(char *real_command, char *shell_name)
  * @argv: Arguments List
  * Return: 0
  */
-
 int main(int argc, char **argv)
 {
 	char **splitted_cmd;
+	char **splitted_cmds;
 	char *cmd_buffer;
 	char *command;
 	char *arg1;
@@ -225,14 +211,15 @@ int main(int argc, char **argv)
 	int cmd_chars_read;
 	int shell_started = false;
 	int file_read_buffer;
-	int max_file_read_buffer = 100;
-	int max_file_cmds = 20;
+	int max_file_read_buffer = 800;
+	int max_file_cmds = 20;/* max cmds allowed in a file */
 	size_t max_cmd_length = 64; /* max len of a command including args */
 	
 	cmd_buffer = (char *)malloc(sizeof(char) * max_cmd_length);
 	fd_buffer = malloc(sizeof(char) * max_file_read_buffer + 1);
-
-	if (cmd_buffer == NULL || fd_buffer == NULL)
+	splitted_cmds = malloc(sizeof(char) * max_file_cmds + 1);
+	
+	if (cmd_buffer == NULL || fd_buffer == NULL || splitted_cmds == NULL)
 	{
 		perror(shell_name);
 	}
@@ -255,58 +242,35 @@ int main(int argc, char **argv)
 			}
 			
 			/* reading file content */
-<<<<<<< HEAD
 			file_content_buffer = malloc(sizeof(char) * max_file_read_buffer + 1);
 			
-=======
-			file_content_buffer = malloc(sizeof(char) *
-					max_file_read_buffer + 1);
-
->>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
 			if (file_content_buffer == NULL)
 			{
 				free(cmd_buffer);
 				perror(shell_name);
 				exit(-1);
 			}
-<<<<<<< HEAD
 			
 			file_read_buffer = read(fd, file_content_buffer, max_file_read_buffer);
 			
-=======
-
-			file_read_buffer = read(fd, file_content_buffer,
-					max_file_read_buffer);
-
->>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
 			file_content_buffer[file_read_buffer] = '\0';
 			
 			/* now executing content */
-<<<<<<< HEAD
-			splitted_file_content = str_split(file_content_buffer, "\n", max_file_cmds);
+			splitted_file_content = str_split(str_strip(file_content_buffer), "\n", max_file_cmds);
 			
-			for (x = 0 ; x < max_file_cmds ;)
-=======
-			splitted_file_content = str_split(file_content_buffer,
-					"\n", max_file_cmds);
-
-			for (x = 0; x < max_file_cmds;)
->>>>>>> 1f2feb87773c8737f1ac6f37f790365701a3ba3d
+			for (x = 0 ; x < str_array_len(splitted_file_content) ;)
 			{
 				command = splitted_file_content[x];
-				if (!command)
+				command = str_strip(command);
+				
+				if (!str_cmp("", command))
 				{
-					break;
-				}
-				else
-				{
-					run_command(str_strip(command),
-							shell_name);
+					run_command(command, shell_name);
 				}
 				x++;
 			}
 			close(fd);
-			exit(0);
+			return (0);
 		}
 	}
 	
@@ -321,9 +285,20 @@ int main(int argc, char **argv)
 			exit(-1);
 		}
 		cmd_buffer[cmd_chars_read] = '\0';
-		command = str_strip(cmd_buffer);
-		run_command(command, shell_name);
-		
+		cmd_buffer = str_strip(cmd_buffer);
+		splitted_cmd = str_split(cmd_buffer, "  ", max_file_cmds);
+
+		for (x = 0; x < str_array_len(splitted_cmd);)
+		{
+			command = splitted_cmd[x];
+			command = str_strip(command);
+			
+			if (!str_cmp("", command))
+			{
+				run_command(command, shell_name);
+			}
+			x++;
+		}
 		return (0);
 	}
 	
@@ -371,19 +346,17 @@ int main(int argc, char **argv)
 				}
 				else
 				{
-					run_command(str_strip(command),
-							shell_name);
+					run_command(command, shell_name);
 				}
 				y++;
 			}
 		}
 		else
 		{
-			run_command(str_strip(command), shell_name);
+			run_command(command, shell_name);
 		}
 	}
 	free(cmd_buffer);
 	(void)argc;
 	return (0);
 }
-
