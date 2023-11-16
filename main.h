@@ -103,6 +103,19 @@ int buildHistoryList(info_t *inf, char *buffer, int countLine);
 int isChain(info_t *, char *, size_t *);
 void checksChain(info_t *, char *, size_t *, size_t, size_t);
 
+/**
+ * struct str_index - struct for index range of a string
+ * @start: starting index for target string
+ * @end: ending index for target string
+ */
+struct str_index
+{
+	int start;
+	int end;
+};
+typedef struct str_index str_index;
+typedef struct str_index sep_index;
+
 int is_file(const char *filepath);
 int is_dir(char *path);
 int set_env(const char *env_variable, const char *env_value);
