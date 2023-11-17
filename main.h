@@ -1,5 +1,6 @@
 #ifndef SIMPLE_SHELL_H
 #define SIMPLE_SHELL_H
+#define my_environment  environ
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +28,7 @@ typedef struct str_index sep_index;
 sep_index *get_sep_indexes(char *string, char *sep, int max_indexes);
 int count_sep_indexes(sep_index *sep_indexes);
 
+int str_array_memcpy(char *_dest[], char *_src[]);
 void free_str_array(char **arr);
 int is_file(const char *filepath);
 int is_dir(char *path);

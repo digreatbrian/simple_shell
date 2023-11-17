@@ -17,7 +17,7 @@ char *str_strip_start(char *string)
 	int i;
 	char c;
 
-	new_string = malloc(sizeof(char) * ln);
+	new_string = malloc(sizeof(char) * ln + 1);
 	counter = 0;
 
 	if (new_string == NULL)

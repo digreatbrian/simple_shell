@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "main.h"
 
-extern char **environ;
-
 /**
  * exec_command - executes a command
  * @cmd: command with(out) arguments
@@ -15,7 +13,7 @@ int exec_command(char *cmd)
 	int max_command_args = 10;
 	char **cmd_array = str_split(cmd, " ", max_command_args);
 	char *filename = cmd_array[0];
-	char **envp = environ;
+	char **envp = my_environment;
 
 	if (!is_file(filename))
 	{

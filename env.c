@@ -17,9 +17,9 @@ int set_env(const char *env_variable, const char *env_value)
 	char *new_env_data;
 	char *tmp;
 	int i;
-	int env_len = str_array_len(environ);
+	int env_len = str_array_len(my_environment);
 	int env_exists = false;
-	char **new_env = malloc(sizeof(char *) * env_len + 1);
+	char **new_env = malloc(sizeof(char *) * (env_len + 2));
 
 	if (new_env == NULL)
 	{
@@ -28,7 +28,7 @@ int set_env(const char *env_variable, const char *env_value)
 
 	for (i = 0; i < env_len; i++)
 	{
-		env_data = environ[i];
+		env_data = my_environment[i];
 		_env = str_split(env_data, "=", 1);
 		env_var = _env[0];
 
@@ -38,7 +38,7 @@ int set_env(const char *env_variable, const char *env_value)
 			{
 				tmp = str_add((char *)env_variable, "=");
 				new_env_data = str_add(tmp, (char *)env_value);
-				environ[i] = new_env_data;
+				my_environment[i] = new_env_data;
 				free(tmp);
 				free(_env);
 				env_exists = true;
@@ -57,8 +57,8 @@ int set_env(const char *env_variable, const char *env_value)
 		
 		for (i = 0; i < env_len; i++)
 		{
-			env_data = environ[i];
-			new_env[i + 1] = malloc(str_len(env_data));
+			env_data = my_environment[i];
+			new_env[i + 1] = malloc(str_len(env_data) * (sizeof(char) + 1));
 
 			if (new_env[i] == NULL)
 			{
@@ -66,11 +66,11 @@ int set_env(const char *env_variable, const char *env_value)
 			}
 			new_env[i + 1] = env_data;
 		}
-		
-		new_env[i + 1] = NULL;
-		environ = new_env;
-	}
 
+		new_env[i + 1] = NULL;
+		str_array_memcpy(my_environment, new_env);
+	}
+	str_array_print(my_environment, "\n");
 	return (0);
 }
 
@@ -86,11 +86,11 @@ int unset_env(const char *env_variable)
 	char *env_data;
 	int i, counter;
 	int exclude_index = -1;
-	int env_len = str_array_len(environ);
+	int env_len = str_array_len(my_environment);
 
 	for (i = 0; i < env_len;)
 	{
-		env_data = environ[i];
+		env_data = my_environment[i];
 		env_data = str_strip(env_data);
 		_env = str_split(env_data, "=", 1);
 		env_var = _env[0];
@@ -113,8 +113,9 @@ int unset_env(const char *env_variable)
 
 	if (exclude_index != -1)
 	{
-		char **new_env = (char **)malloc(sizeof(char *) * env_len + sizeof(NULL));
-
+		char **new_env;
+		
+		new_env = malloc(sizeof(char *) * (env_len + 2));
 		if (new_env == NULL)
 		{
 			return (-1);
@@ -128,13 +129,13 @@ int unset_env(const char *env_variable)
 				i++;
 				continue;
 			}
-			env_data = environ[i];
+			env_data = my_environment[i];
 			new_env[counter] = env_data;
 			counter++;
 			i++;
 		}
-		new_env[counter + 1] = NULL;
-		environ = new_env;
+		new_env[counter] = NULL;
+		str_array_memcpy(my_environment, new_env);
 	}
 	else
 	{
@@ -155,11 +156,11 @@ char *get_env(const char *env_variable)
 	char *env_var;
 	char *env_val;
 	int i;
-	int env_len = str_array_len(environ);
+	int env_len = str_array_len(my_environment);
 
 	for (i = 0; i < env_len; i++)
 	{
-		env_data = environ[i];
+		env_data = my_environment[i];
 		_env = str_split(env_data, "=", 2);
 		env_var = _env[0];
 		env_val = _env[1];

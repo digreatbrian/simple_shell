@@ -11,12 +11,12 @@ void free_str_array(char **arr)
 	
 	for (i = 0; i < str_array_len(arr) ;  i++)
 	{
-	   if (arr[1])
+	   if (arr[i])
 	   {
-	   	if (!str_cmp(str_strip(arr[1]), ""))
+	   	if (!str_cmp(str_strip(arr[i]), ""))
 	   	{
-	   		free(arr[1]);
-	   	}
+			free(arr[i]);
+		}
 	   }
     }
     if (str_array_len(arr) > 0)

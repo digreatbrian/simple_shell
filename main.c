@@ -8,6 +8,14 @@
 #include <errno.h>
 #include "main.h"
 
+void none(void)
+{
+	/* null function */
+}
+
+/**
+ * last_error - Last error used by exit if no args
+*/
 int last_error = 0;
 
 /**
@@ -91,14 +99,14 @@ int run_command(char *real_command, char *shell_name)
 				status = 2;
 			}
 		}
-		free_str_array(command_tmp);
 	}
 	else
 	{
 		splitted_cmd = str_split(real_cmd, " ", 2);
+
 		if (str_cmp(splitted_cmd[0], "env"))
 		{
-			str_array_print(environ, "\n");
+			str_array_print(my_environment, "\n");
 		}
 
 		else if (str_cmp(splitted_cmd[0], "exit"))
@@ -119,6 +127,7 @@ int run_command(char *real_command, char *shell_name)
 					msg = str_add(shell_name, ": 1: exit: Illegal number: ");
 					msg = str_add(msg, splitted_cmd[1]);
 					msg = str_add(msg, "\n");
+					
 					_err_print(msg);
 					free_str_array(command_tmp);
 					free_str_array(splitted_cmd);
@@ -129,7 +138,6 @@ int run_command(char *real_command, char *shell_name)
 			else
 			{
 				free_str_array(command_tmp);
-				free_str_array(splitted_cmd);
 				exit(last_error);
 			}
 		}
@@ -139,25 +147,29 @@ int run_command(char *real_command, char *shell_name)
 			int k;
 
 			env_var = splitted_cmd[1];
-			env_val = splitted_cmd[2];
 
-			if (!env_var || !env_val)
+			if (!env_var)
 			{
 				_err_print(str_add(shell_name, ": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
-				free_str_array(command_tmp);
-				free_str_array(splitted_cmd);
 			}
 			else
 			{
-				k = set_env(env_var, env_val);
-				
-				if (k == -1)
+				env_val = splitted_cmd[2];
+
+				if (!env_val)
 				{
-					status = 127;
-					perror(shell_name);
+					_err_print(str_add(shell_name, ": Command syntax: setenv ENV_VARIABLE ENV_VALUE\n"));
 				}
-				free_str_array(command_tmp);
-				free_str_array(splitted_cmd);
+				else
+				{
+					k = set_env(env_var, env_val);
+
+					if (k == -1)
+					{
+						status = 127;
+						perror(shell_name);
+					}
+				}
 			}
 		}
 
@@ -168,20 +180,14 @@ int run_command(char *real_command, char *shell_name)
 			if (!env_var)
 			{
 				_err_print(str_add(shell_name, ": Command syntax: unsetenv ENV_VARIABLE\n"));
-				free_str_array(command_tmp);
-				free_str_array(splitted_cmd);
-			}
+			}	
 			else if (get_env(env_var) == NULL)
 			{
 				_err_print(str_add(shell_name, ": Error: Trying to set an unexisting ENV_VARIABLE\n"));
-				free_str_array(command_tmp);
-				free_str_array(splitted_cmd);
 			}
 			else
 			{
 				unset_env(env_var);
-				free_str_array(command_tmp);
-				free_str_array(splitted_cmd);
 			}
 		}
 
@@ -239,31 +245,29 @@ int run_command(char *real_command, char *shell_name)
 					_err_print(msg);
 				}
 			}
-			
-			free_str_array(command_tmp);
-			free_str_array(splitted_cmd);
+
+			if (splitted_cmd)
+			{
+				free_str_array(splitted_cmd);
+			}
 		}
 		else
 		{
-			/* Run it as any other command */
+			/* cmd doesnt exist */
 			cmd_status = exec_command(real_cmd);
 
-			if (cmd_status == -1)
-			{
-				/* cmd was unsuccessful*/
-				msg = str_add(shell_name, ": ");
-				msg = str_add(msg, "1: ");
-				msg = str_add(msg, command);
-				msg = str_add(msg, ": not found\n");
-				_err_print(msg);
-				errno = 127;
-				status = errno;
-			}
+			/* cmd was unsuccessful*/
+			msg = str_add(shell_name, ": ");
+			msg = str_add(msg, "1: ");
+			msg = str_add(msg, command);
+			msg = str_add(msg, ": not found\n");
+			_err_print(msg);
+			errno = 127;
+			status = errno;
 			
-			free_str_array(command_tmp);
-			free_str_array(splitted_cmd);
 		}
 	}
+	
 	return (status);
 }
 
@@ -395,7 +399,7 @@ int main(int argc, char **argv)
 		splitted_cmds = str_split(cmd_buffer, "\n", max_file_cmds);
 		colon_splitted_cmds = str_split(cmd_buffer, ";", max_file_cmds);
 		
-		if (str_cmp(cmd_buffer, "hbtn_ls") && !splitted_cmds[1])
+		if (str_cmp(cmd_buffer, "hbtn_ls"))
 		{
 			msg = str_add(shell_name, ": ");
 			msg = str_add(msg, "1: ");

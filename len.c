@@ -13,12 +13,14 @@ int str_len(char *string)
 	int counter = 0;
 	char ch;
 
-	ch = string[counter];
-
-	while (ch != '\0')
+	if (*string)
 	{
-		counter++;
 		ch = string[counter];
+		while (ch != '\0')
+		{
+			counter++;
+			ch = string[counter];
+		}
 	}
 	return (counter);
 }
