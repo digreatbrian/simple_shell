@@ -2,12 +2,15 @@
 #include <stdbool.h>
 #include "main.h"
 
+void tafara(void);
+
 /**
  * str_strip_start - strips whitespaces from start
  * from start of a string including tabs/newlines
  * @string: String to strip
  * Return: stripped string
  */
+
 char *str_strip_start(char *string)
 {
 	char *new_string;
@@ -34,7 +37,8 @@ char *str_strip_start(char *string)
 		if (c != ' ' && c != '\n' && c != '\t' && is_start_of_string)
 		{
 			/**
-			 * lets strip the spaces because this is the start of the string
+			 * Lets strip the spaces because this is the start of
+			 * the string
 			 */
 			new_string[counter] = c;
 			counter++;
@@ -44,9 +48,10 @@ char *str_strip_start(char *string)
 		else if (!is_start_of_string)
 		{
 			/**
-			 * record as it is , this is not the start of the string ,the spaces
-			 * might be needed for string to make sense, it can be spaces in
-			 * between a string ,we dont need to remove that
+			 * Records as it is , this is not the start of the
+			 * string ,the spaces might be needed for string to make
+			 * sense, it can be spaces in between a string, we don't
+			 * need to remove that.
 			 */
 			new_string[counter] = c;
 			counter++;
@@ -63,6 +68,7 @@ char *str_strip_start(char *string)
  * @string: string to strip
  * Return: stripped string
  */
+
 char *str_strip_end(char *string)
 {
 	char *new_string;
@@ -84,8 +90,9 @@ char *str_strip_end(char *string)
 			else
 			{
 				/**
-				 * the moment we come across a valid char then stop ,
-				 * thats where we will end up when building new string
+				 * The moment we come across a valid char then
+				 * stop, that's where we will end up when
+				 * building new string
 				 */
 				end_index = i;
 				break;
@@ -114,6 +121,7 @@ char *str_strip_end(char *string)
  * @string: string to strip
  * Return: stripped string
  */
+
 char *str_strip(char *string)
 {
 	char *first_strip = str_strip_start(string);
@@ -121,3 +129,4 @@ char *str_strip(char *string)
 
 	return (second_strip);
 }
+

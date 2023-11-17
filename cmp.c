@@ -18,7 +18,7 @@ int str_cmp(char *a, char *b)
 	if (a_len != b_len)
 	{
 		is_equal = false;
-		return is_equal;
+		return (is_equal);
 	}
 
 	for (; i < a_len; i++)
