@@ -373,7 +373,6 @@ int main(int argc, char **argv)
 			_err_print(msg);
 			free(cmd_buffer);
 			free(fd_buffer);
-			free_str_array(splitted_cmds);
 			exit(127);
 		}
 	}
