@@ -245,11 +245,6 @@ int run_command(char *real_command, char *shell_name)
 					_err_print(msg);
 				}
 			}
-
-			if (splitted_cmd)
-			{
-				free_str_array(splitted_cmd);
-			}
 		}
 		else
 		{
@@ -361,7 +356,6 @@ int main(int argc, char **argv)
 
 			free(cmd_buffer);
 			free(fd_buffer);
-			free_str_array(splitted_cmds);
 			close(fd);
 			exit(0);
 		}
@@ -480,7 +474,6 @@ int main(int argc, char **argv)
 
 		free(cmd_buffer);
 		free(fd_buffer);
-		free_str_array(splitted_cmds);
 		
 		if (!is_error)
 		{

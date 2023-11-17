@@ -6,4 +6,4 @@ function build_cmd(){
 }
 echo Starting compilation
 build_cmd
-$built_cmd && echo Finished compilation successfuly && echo -e "\n*************CHECKING MEMORY ERRORS*************\n" && valgrind  ./hsh
+$built_cmd && echo Finished compilation successfuly && echo -e "\n************* CHECKING MEMORY ERRORS *************\n" && valgrind -v ./hsh

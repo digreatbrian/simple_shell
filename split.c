@@ -22,7 +22,7 @@ char **str_split(char *string, char *sep, int max_splits)
 	if (sep_indexes == NULL)
 	{
 		/* no single sep was discovered */
-		splitted = malloc((sizeof(char *) + sizeof(char *)));
+		splitted = malloc((sizeof(char *) * 3));
 
 		if (splitted == NULL)
 		{
@@ -35,7 +35,7 @@ char **str_split(char *string, char *sep, int max_splits)
 
 	string_len = str_len(string);
 	index_count = count_sep_indexes(sep_indexes);
-	splitted = malloc((sizeof(sep_index) * (index_count + 2)) + sizeof(char) + 8);
+	splitted = malloc((sizeof(sep_index) * (index_count + 2)) + (sizeof(char *) * 2));
 
 	for (i = 0; i <= index_count;)
 	{
@@ -121,7 +121,7 @@ sep_index *get_sep_indexes(char *string, char *sep, int max_indexes)
 	int i = 0;
 	int sep_found = true;
 	char cha;
-	sep_index *indexes = malloc((sizeof(sep_index) * max_indexes) + sizeof(NULL));
+	sep_index *indexes = malloc((sizeof(sep_index) * (max_indexes + 2)));
 	/* index to show we have finished adding indexes */
 	sep_index closing_index;
 

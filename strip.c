@@ -98,7 +98,7 @@ char *str_strip_end(char *string)
 		end_index = 0;
 	}
 
-	new_string = malloc(sizeof(char) * (end_index) + sizeof(char));
+	new_string = malloc(sizeof(char) * (end_index + 2));
 
 	if (new_string == NULL)
 	{

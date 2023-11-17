@@ -58,7 +58,7 @@ int set_env(const char *env_variable, const char *env_value)
 		for (i = 0; i < env_len; i++)
 		{
 			env_data = my_environment[i];
-			new_env[i + 1] = malloc(str_len(env_data) * (sizeof(char) + 1));
+			new_env[i + 1] = malloc(str_len(env_data) * (sizeof(char) + 2));
 
 			if (new_env[i] == NULL)
 			{
