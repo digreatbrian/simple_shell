@@ -11,7 +11,7 @@
 char *str_strip_start(char *string)
 {
 	char *new_string;
-	int ln = str_len(string) + 1;
+	int ln = str_len(string);
 	int is_start_of_string = true;
 	int counter;
 	int i;

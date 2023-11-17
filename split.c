@@ -2,8 +2,7 @@
 #include <stdbool.h>
 #include "main.h"
 
-sep_index *get_sep_indexes(char *string, char *sep, int max_indexes);
-int count_sep_indexes(sep_index *sep_indexes);
+void none(void);
 
 /**
  * str_split - splits a string
@@ -12,7 +11,6 @@ int count_sep_indexes(sep_index *sep_indexes);
  * @max_splits: max number of splits
  * Return: array of strings | NULL
  */
-
 char **str_split(char *string, char *sep, int max_splits)
 {
 	int i, string_len;
@@ -114,7 +112,6 @@ char **str_split(char *string, char *sep, int max_splits)
  * @max_indexes: max number of indexes
  * Return: array of separator indexes | NULL
  */
-
 sep_index *get_sep_indexes(char *string, char *sep, int max_indexes)
 {
 	int sep_len = str_len(sep);
@@ -124,8 +121,7 @@ sep_index *get_sep_indexes(char *string, char *sep, int max_indexes)
 	int i = 0;
 	int sep_found = true;
 	char cha;
-	sep_index *indexes = malloc((sizeof(sep_index) * max_indexes) +
-			sizeof(NULL));
+	sep_index *indexes = malloc((sizeof(sep_index) * max_indexes) + sizeof(NULL));
 	/* index to show we have finished adding indexes */
 	sep_index closing_index;
 
@@ -191,7 +187,6 @@ sep_index *get_sep_indexes(char *string, char *sep, int max_indexes)
  * @sep_indexes: array of sep_indexes
  * Return: number of sep indexes found
  */
-
 int count_sep_indexes(sep_index *sep_indexes)
 {
 	int counter = 0;
@@ -209,4 +204,3 @@ int count_sep_indexes(sep_index *sep_indexes)
 	}
 	return (counter);
 }
-

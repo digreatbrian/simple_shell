@@ -3,15 +3,12 @@
 #include <stdio.h>
 #include "main.h"
 
-void tafara(void);
-
 /**
  * set_env - set environment variable value
  * @env_variable: Environment variable
  * @env_value: Environment variable value
  * Return: 0 on success and -1 on error
  */
-
 int set_env(const char *env_variable, const char *env_value)
 {
 	char **_env;
@@ -54,23 +51,23 @@ int set_env(const char *env_variable, const char *env_value)
 	if (!env_exists)
 	{
 		/*env variable doesnt exist at all */
+		tmp = str_add((char *)env_variable, "=");
+		new_env_data = str_add(tmp, (char *)env_value);
+		new_env[0] = new_env_data;
+		
 		for (i = 0; i < env_len; i++)
 		{
 			env_data = environ[i];
-			new_env[i] = malloc(str_len(env_data));
+			new_env[i + 1] = malloc(str_len(env_data));
 
 			if (new_env[i] == NULL)
 			{
 				return (-1);
 			}
-			new_env[i] = env_data;
+			new_env[i + 1] = env_data;
 		}
-
-		tmp = str_add((char *)env_variable, "=");
-		new_env_data = str_add(tmp, (char *)env_value);
-		new_env[i] = new_env_data;
+		
 		new_env[i + 1] = NULL;
-
 		environ = new_env;
 	}
 
@@ -82,14 +79,13 @@ int set_env(const char *env_variable, const char *env_value)
  * @env_variable: Environment variable
  * Return: 0 on success and -1 on error
  */
-
 int unset_env(const char *env_variable)
 {
 	char **_env;
 	char *env_var;
 	char *env_data;
 	int i, counter;
-	int exclude_index = '\0';
+	int exclude_index = -1;
 	int env_len = str_array_len(environ);
 
 	for (i = 0; i < env_len;)
@@ -115,7 +111,7 @@ int unset_env(const char *env_variable)
 	/* iterating thru environ but excluding ENV VAR at exclude_index */
 	counter = 0;
 
-	if (exclude_index != '\0')
+	if (exclude_index != -1)
 	{
 		char **new_env = (char **)malloc(sizeof(char *) * env_len + sizeof(NULL));
 
@@ -140,7 +136,10 @@ int unset_env(const char *env_variable)
 		new_env[counter + 1] = NULL;
 		environ = new_env;
 	}
-	/* NO ACTION TO PERFORM ,no ENV VAR to unset */
+	else
+	{
+		/* NO ACTION TO PERFORM ,no ENV VAR to unset */
+	}
 	return (0);
 }
 
@@ -149,7 +148,6 @@ int unset_env(const char *env_variable)
  * @env_variable: Environment variable
  * Return: Environment variable value or null on error
  */
-
 char *get_env(const char *env_variable)
 {
 	char **_env;
@@ -177,4 +175,3 @@ char *get_env(const char *env_variable)
 	}
 	return (NULL);
 }
-
