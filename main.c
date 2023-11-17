@@ -70,7 +70,7 @@ void run_command(char *real_command, char *shell_name)
 		else if (child_pid == 0)
 		{
 			getpid();
-			cmd_status = exec_command(real_cmd);
+			cmd_status = exec_command(real_command);
 
 			if (cmd_status == -1)
 			{
@@ -82,7 +82,7 @@ void run_command(char *real_command, char *shell_name)
 	}
 	else
 	{
-		splitted_cmd = str_split(real_cmd, " ", 2);
+		splitted_cmd = str_split(real_command, " ", 2);
 
 		if (str_cmp(splitted_cmd[0], "exit"))
 		{
@@ -190,7 +190,7 @@ void run_command(char *real_command, char *shell_name)
 		else
 		{
 			/* Run it as any other command */
-			cmd_status = exec_command(real_cmd);
+			cmd_status = exec_command(real_command);
 
 			free(command_tmp);
 			free(splitted_cmd);
