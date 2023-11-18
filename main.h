@@ -32,7 +32,7 @@ int str_array_memcpy(char *_dest[], char *_src[]);
 void free_str_array(char **arr);
 int is_file(const char *filepath);
 int is_dir(char *path);
-int set_env(const char *env_variable, const char *env_value);
+int set_env(const char *env_variable, const char *env_value, int print_env);
 int unset_env(const char *env_variable);
 char *get_env(const char *env_variable);
 int _putchar(int c);

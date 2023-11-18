@@ -48,7 +48,7 @@ int str_to_int(char *string)
 	else
 	{
 		is_negative = false;
-		if (string[0] == '+')
+		if (string[0] == '+' || string[0] == 0)
 		{
 			i = 1;
 		}
@@ -57,6 +57,7 @@ int str_to_int(char *string)
 	for (; i < stringlen; i++)
 	{
 		c = string[i];
+		
 		if (c >= '0' && c <= '9')
 		{
 			pow = 1;

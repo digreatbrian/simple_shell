@@ -117,9 +117,7 @@ int run_command(char *real_command, char *shell_name)
 				
 				if (x >= 0)
 				{
-					free_str_array(command_tmp);
 					free_str_array(splitted_cmd);
-				
 					exit(x);
 				}
 				else
@@ -162,7 +160,7 @@ int run_command(char *real_command, char *shell_name)
 				}
 				else
 				{
-					k = set_env(env_var, env_val);
+					k = set_env(env_var, env_val, 1);
 
 					if (k == -1)
 					{
@@ -198,7 +196,7 @@ int run_command(char *real_command, char *shell_name)
 			
 			if (!old_pwd && current_pwd)
 			{
-				set_env("OLDPWD", current_pwd);
+				set_env("OLDPWD", current_pwd, 0);
 			}
 			
 			cd_path = splitted_cmd[1];
@@ -212,7 +210,7 @@ int run_command(char *real_command, char *shell_name)
 				/* cd to $HOME coz no path provided */
 				cd_path = get_env("HOME");
 				chdir(cd_path);
-				set_env("OLDPWD", current_pwd);
+				set_env("OLDPWD", current_pwd, 0);
 			}
 
 			else if (str_cmp(cd_path, "-"))
@@ -222,8 +220,8 @@ int run_command(char *real_command, char *shell_name)
 				if (cd_path)
 				{
 					chdir(cd_path);
-					set_env("PWD", cd_path);
-					set_env("OLDPWD", current_pwd);
+					set_env("PWD", cd_path, 0);
+					set_env("OLDPWD", current_pwd, 0);
 					_print(cd_path);
 					_print("\n");
 				}
@@ -233,8 +231,8 @@ int run_command(char *real_command, char *shell_name)
 				if (is_dir(cd_path))
 				{
 					chdir(cd_path);
-					set_env("PWD", cd_path);
-					set_env("OLDPWD", current_pwd);
+					set_env("PWD", cd_path, 0);
+					set_env("OLDPWD", current_pwd, 0);
 				}
 				else
 				{
@@ -536,6 +534,23 @@ int main(int argc, char **argv)
 		}
 		else
 		{
+			splitted_cmd = str_split(command, "  ", 64);
+			if (splitted_cmd[1])
+			{
+				for (y = 0; y < 10;)
+				{
+					command = splitted_cmd[y];
+					if (!command)
+					{
+						break;
+					}
+					else
+					{
+						run_command(command, shell_name);
+					}
+					y++;
+				}
+			}
 			run_command(command, shell_name);
 		}
 	}

@@ -9,7 +9,7 @@
  * @env_value: Environment variable value
  * Return: 0 on success and -1 on error
  */
-int set_env(const char *env_variable, const char *env_value)
+int set_env(const char *env_variable, const char *env_value, int print_env)
 {
 	char **_env;
 	char *env_data;
@@ -70,7 +70,11 @@ int set_env(const char *env_variable, const char *env_value)
 		new_env[i + 1] = NULL;
 		str_array_memcpy(my_environment, new_env);
 	}
-	str_array_print(my_environment, "\n");
+
+	if (print_env)
+	{
+		str_array_print(my_environment, "\n");
+	}
 	return (0);
 }
 
